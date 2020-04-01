@@ -7,7 +7,6 @@ public class BulletController : MonoBehaviour
     private Transform bullet;
     public float speed;
 
-    // Start is called before the first frame update
     void Start()
     {
         bullet = GetComponent<Transform>();
@@ -30,6 +29,22 @@ public class BulletController : MonoBehaviour
             PlayerScore.playerScore += 10;
         }
         else if (other.tag == "Base")
+        {
             Destroy(gameObject);
+        }
+        else if (other.tag == "SmallStar")
+        {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+            PlayerScore.playerScore += 10;
+        }
+        else if (other.tag == "BigStar")
+        {
+            GameObject BigStar = other.gameObject;
+            BigStarHealth BigStarHealth = BigStar.GetComponent<BigStarHealth>();
+            BigStarHealth.health -= 1f;
+            Destroy(gameObject);
+            PlayerScore.playerScore += 10;
+        }
     }
 }

@@ -8,7 +8,7 @@ public class RestartLevel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && GameOver.isPlayerDead == true)
         {
             PlayerScore.playerScore = 0;
             GameOver.isPlayerDead = false;

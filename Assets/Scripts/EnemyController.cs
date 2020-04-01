@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class EnemyController : MonoBehaviour
 {
     public Transform enemyHolder;
@@ -34,7 +34,7 @@ public class EnemyController : MonoBehaviour
                 return;
             }
 
-            if (Random.value > fireRate)
+            if (Random.value+0.002f > fireRate)
             {
                 Instantiate(shot, enemy.position, enemy.rotation);
             }
@@ -43,10 +43,10 @@ public class EnemyController : MonoBehaviour
             {
                 GameOver.isPlayerDead = true;
                 Time.timeScale = 0;
+                Destroy(gameObject);
             }
-        }
 
-       
+        }
 
         if (enemyHolder.childCount == 1)
         {
@@ -56,7 +56,8 @@ public class EnemyController : MonoBehaviour
 
         if (enemyHolder.childCount == 0)
         {
-            winText.enabled = true;
+            SceneManager.LoadScene("Scene_002");
+            //winText.enabled = true;
         }
     }
 }
