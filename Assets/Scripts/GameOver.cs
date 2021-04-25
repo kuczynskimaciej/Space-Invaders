@@ -19,7 +19,7 @@ public class GameOver : MonoBehaviour
     {
         if (isPlayerDead)
         {
-            Time.timeScale = 0;
+            Time.timeScale = 1;
             gameOver.enabled = true;
         }
     }

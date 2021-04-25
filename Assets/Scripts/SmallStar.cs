@@ -5,7 +5,9 @@ using UnityEngine;
 public class SmallStar : MonoBehaviour
 {
     private Transform smallStar;
-    public float speed;
+    public float minSpeed;
+    public float maxSpeed;
+    float speed;
 
     void Start()
     {
@@ -14,8 +16,9 @@ public class SmallStar : MonoBehaviour
 
     void Update()
     {
+        speed = Random.Range(minSpeed, maxSpeed);
         smallStar.position += Vector3.down * speed * 0.1f;
-
+        smallStar.transform.Rotate(0f, 0f, 7f, Space.Self);
         if (smallStar.position.y < -7.5f)
         {
             Destroy(smallStar.gameObject);

@@ -4,41 +4,50 @@ using UnityEngine;
 
 public class PlayerControler : MonoBehaviour
 {
-    private Transform player;
+    public Rigidbody2D player;
+    Vector2 movement;
     public float speed;
-    public float maxBound, minBound;
+    public float maxBoundX, minBoundX;
+    public float maxBoundY, minBoundY;
 
     public GameObject shot;
     public Transform shotSpawn;
     public float fireRate;
-
     private float nextFire;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        player = GetComponent<Transform>();
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        float h = Input.GetAxis("Horizontal");
-
-        if (player.position.x < minBound && h < 0)
-            h = 0;
-        else if (player.position.x > maxBound && h > 0)
-            h = 0;
-
-        player.position += Vector3.right * h * speed;
-    }
 
     void Update()
     {
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+
         if (Input.GetButton("Fire1") && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (player.position.x < minBoundX && movement.x < 0)
+            movement.x = 0;
+        else if (player.position.x > maxBoundX && movement.x > 0)
+            movement.x = 0;
+        else if (player.position.y > maxBoundY && movement.y > 0)
+            movement.y = 0;
+        else if (player.position.y < minBoundY && movement.y < 0)
+            movement.y = 0;
+
+        player.MovePosition(player.position + movement * speed * Time.fixedDeltaTime);
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Enemy")
+        {
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+            GameOver.isPlayerDead = true;
         }
     }
 }

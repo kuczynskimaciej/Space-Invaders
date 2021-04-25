@@ -7,15 +7,12 @@ public class EnemyController : MonoBehaviour
 {
     public Transform enemyHolder;
     public float speed;
-   
+
     public GameObject shot;
-    public Text winText;
     public float fireRate = 0.997f;
 
-    // Start is called before the first frame update
     void Start()
     {
-        winText.enabled = false;
         InvokeRepeating("MoveEnemy", 0.1f, 0.3f);
         enemyHolder = GetComponent<Transform>();
     }
@@ -34,7 +31,7 @@ public class EnemyController : MonoBehaviour
                 return;
             }
 
-            if (Random.value+0.002f > fireRate)
+            if (Random.value + 0.002f > fireRate)
             {
                 Instantiate(shot, enemy.position, enemy.rotation);
             }
@@ -45,7 +42,6 @@ public class EnemyController : MonoBehaviour
                 Time.timeScale = 0;
                 Destroy(gameObject);
             }
-
         }
 
         if (enemyHolder.childCount == 1)
@@ -57,7 +53,6 @@ public class EnemyController : MonoBehaviour
         if (enemyHolder.childCount == 0)
         {
             SceneManager.LoadScene("Scene_002");
-            //winText.enabled = true;
         }
     }
 }
